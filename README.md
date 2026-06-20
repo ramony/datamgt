@@ -23,7 +23,7 @@
 ---
 
 ## 项目结构
-
+```
 datamgt/
 ├── src/
 │   ├── app/
@@ -76,7 +76,7 @@ datamgt/
 ├── next.config.ts
 ├── package.json
 └── tsconfig.json
-
+```
 
 ---
 
@@ -209,7 +209,7 @@ datamgt/
 ## 本地元数据存储（SQLite）
 
 使用 better-sqlite3 在本地 data/meta.db 存储以下数据：
-
+```
 sql
 -- 连接配置
 CREATE TABLE IF NOT EXISTS connections (
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS faker_templates (
   created_at TEXT DEFAULT (datetime('now')),
   updated_at TEXT DEFAULT (datetime('now'))
 );
-
+```
 
 ---
 
@@ -284,7 +284,7 @@ CREATE TABLE IF NOT EXISTS faker_templates (
 ---
 
 ## MySQL 连接池管理
-
+```
 typescript
 // 关键配置
 mysql.createPool({
@@ -294,7 +294,7 @@ mysql.createPool({
   timezone: "+08:00",        // 统一使用中国时区
   dateStrings: ["DATE"],     // date 类型直接返回字符串，避免时区转换
 });
-
+```
 
 - 连接池按 connectionId:database 为 key 缓存
 - 密码从 SQLite 读取后解密使用
@@ -330,43 +330,43 @@ mysql.createPool({
 ## 跨组件通信
 
 使用浏览器原生 CustomEvent 实现：
-
+```
 typescript
 // 发送：表数据变化时
 window.dispatchEvent(new CustomEvent("table-data-changed", { detail: { database } }));
 
 // 监听：侧边栏刷新表行数
 window.addEventListener("table-data-changed", handler);
-
+```
 
 ---
 
 ## 部署
 
 ### 开发环境
-
+```
 bash
 npm install
 npm run dev    # 默认 http://localhost:3000
-
+```
 
 ### Docker 部署
-
+```
 bash
 docker-compose up -d    # 映射端口 3308:3000
-
+```
 
 - 数据目录 ./data 挂载到容器内 /app/data（持久化 SQLite）
 - 环境变量 ENCRYPTION_KEY 用于密码加密
 
 ### next.config.ts
-
+```
 typescript
 const nextConfig: NextConfig = {
   output: "standalone",                    // Docker 优化
   serverExternalPackages: ["better-sqlite3"], // 原生模块排除
 };
-
+```
 
 ---
 
