@@ -23,7 +23,7 @@ export default function StructurePage({ params }: { params: Promise<{ connId: st
   }, [resolved.connId, resolved.database, resolved.table]);
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
+    <Space orientation="vertical" style={{ width: "100%" }}>
       <h2>{resolved.table} 表结构</h2>
       <Tabs
         items={[

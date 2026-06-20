@@ -40,7 +40,7 @@ export default function ImportExportPage({ params }: { params: Promise<{ connId:
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }} size={14}>
+    <Space orientation="vertical" style={{ width: "100%" }} size={14}>
       <h2>导入 {table}</h2>
       <Card>
         <Form form={form} layout="vertical" initialValues={{ strategy: "ignore" }}>

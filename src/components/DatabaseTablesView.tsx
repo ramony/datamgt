@@ -34,7 +34,7 @@ export default function DatabaseTablesView({ connId, database }: { connId: strin
   const filtered = tables.filter((table) => table.name.toLowerCase().includes(keyword.toLowerCase()));
 
   return (
-    <Space direction="vertical" size={14} style={{ width: "100%" }}>
+    <Space orientation="vertical" size={14} style={{ width: "100%" }}>
       <div className="toolbar" style={{ justifyContent: "space-between" }}>
         <div>
           <h2 style={{ margin: 0 }}>{database}</h2>
@@ -53,7 +53,7 @@ export default function DatabaseTablesView({ connId, database }: { connId: strin
         </Space>
       </div>
       <Card>
-        <Space direction="vertical" style={{ width: "100%" }}>
+        <Space orientation="vertical" style={{ width: "100%" }}>
           <Input.Search placeholder="搜索表名" allowClear value={keyword} onChange={(event) => setKeyword(event.target.value)} style={{ maxWidth: 360 }} />
           <Table
             rowKey="name"

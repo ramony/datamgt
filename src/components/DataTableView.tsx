@@ -165,7 +165,7 @@ export default function DataTableView({ connId, database, table }: { connId: str
   };
 
   return (
-    <Space direction="vertical" size={12} style={{ width: "100%" }}>
+    <Space orientation="vertical" size={12} style={{ width: "100%" }}>
       <div className="toolbar">
         {Object.keys(edits).length > 0 && (
           <>
@@ -233,7 +233,7 @@ export default function DataTableView({ connId, database, table }: { connId: str
             key: "sql",
             label: "SQL",
             children: (
-              <Space direction="vertical" style={{ width: "100%" }}>
+              <Space orientation="vertical" style={{ width: "100%" }}>
                 <SqlEditor ref={editorRef} value={sqlText} onChange={setSqlText} onExecute={runCustomSql} schema={schema} />
                 <Button type="primary" onClick={runCustomSql}>
                   执行
@@ -246,7 +246,7 @@ export default function DataTableView({ connId, database, table }: { connId: str
       <Table
         size="small"
         rowKey="__key"
-        scroll={{ x: "max-content" }}
+        scroll={{ x: "max-content", y: 860 }}
         columns={antColumns}
         dataSource={rows}
         rowSelection={{ selectedRowKeys: selectedKeys, onChange: setSelectedKeys }}
@@ -304,7 +304,7 @@ function FilterModal({ open, columns, onCancel, onApply }: { open: boolean; colu
       <Form form={form} initialValues={{ filters: [{ operator: "=", value: "" }] }}>
         <Form.List name="filters">
           {(fields, { add, remove }) => (
-            <Space direction="vertical" style={{ width: "100%" }}>
+            <Space orientation="vertical" style={{ width: "100%" }}>
               {fields.map((field) => (
                 <Space key={field.key}>
                   <Form.Item name={[field.name, "column"]} noStyle>
@@ -333,7 +333,7 @@ function BatchModal({ open, columns, onCancel, onApply }: { open: boolean; colum
   const [value, setValue] = useState("");
   return (
     <Modal open={open} title="批量编辑" onCancel={onCancel} onOk={() => onApply(column, value)}>
-      <Space direction="vertical" style={{ width: "100%" }}>
+      <Space orientation="vertical" style={{ width: "100%" }}>
         <Select style={{ width: "100%" }} placeholder="选择列" options={columns.map((c) => ({ value: c.Field, label: c.Field }))} onChange={setColumn} />
         <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="新值" />
         <InputNumber style={{ display: "none" }} />

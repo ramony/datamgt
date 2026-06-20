@@ -30,7 +30,7 @@ export default function HistoryPage({ params }: { params: Promise<{ connId: stri
   }, [connId]);
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
+    <Space orientation="vertical" style={{ width: "100%" }}>
       <div className="toolbar">
         <Input.Search placeholder="搜索 SQL" value={q} onChange={(e) => setQ(e.target.value)} onSearch={load} style={{ width: 360 }} />
       </div>

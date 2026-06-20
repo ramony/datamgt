@@ -57,7 +57,7 @@ export default function SqlConsolePage({ params, searchParams }: { params: Promi
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }} size={12}>
+    <Space orientation="vertical" style={{ width: "100%" }} size={12}>
       <div className="toolbar">
         <Select value={db} onChange={setDb} style={{ width: 220 }} options={databases.map((name) => ({ value: name, label: name }))} />
         <Button type="primary" onClick={execute}>
@@ -80,7 +80,7 @@ export default function SqlConsolePage({ params, searchParams }: { params: Promi
         items={tabs.map((tab) => ({
           key: tab.key,
           label: tab.label,
-          children: <SqlEditor ref={editorRef} value={tab.sql} onChange={setCurrentSql} onExecute={execute} schema={schema} minHeight={220} />
+          children: <SqlEditor ref={editorRef} value={tab.sql} onChange={setCurrentSql} onExecute={execute} schema={schema} minHeight={60} />
         }))}
       />
       {results.length > 0 && (
@@ -89,14 +89,14 @@ export default function SqlConsolePage({ params, searchParams }: { params: Promi
             key: String(index),
             label: `结果 ${index + 1}`,
             children: (
-              <Space direction="vertical" style={{ width: "100%" }}>
+              <Space orientation="vertical" style={{ width: "100%" }}>
                 <Card size="small">
                   <Space>
                     <Tag color={result.error ? "red" : "green"}>{result.error ? "失败" : "成功"}</Tag>
                     <span>{result.durationMs} ms</span>
                     {result.affectedRows !== undefined && <span>影响行数：{result.affectedRows}</span>}
                   </Space>
-                  <pre style={{ marginTop: 8 }}>{result.sql}</pre>
+                  {/* <pre style={{ marginTop: 8 }}>{result.sql}</pre> */}
                 </Card>
                 {result.error ? (
                   <Alert type="error" message={result.error} />
@@ -105,7 +105,7 @@ export default function SqlConsolePage({ params, searchParams }: { params: Promi
                     size="small"
                     rowKey={(_, i) => String(i)}
                     dataSource={result.rows}
-                    scroll={{ x: "max-content" }}
+                    scroll={{ x: "max-content", y: 780 }}
                     columns={Object.keys(result.rows?.[0] || {}).map((key) => ({ title: key, dataIndex: key, render: (v: unknown) => String(v ?? "") }))}
                   />
                 )}

@@ -65,7 +65,7 @@ export default function GeneratePage({ params }: { params: Promise<{ connId: str
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }} size={14}>
+    <Space orientation="vertical" style={{ width: "100%" }} size={14}>
       <h2>生成数据：{table}</h2>
       <Card>
         <Form form={form} layout="vertical">

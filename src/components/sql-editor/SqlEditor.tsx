@@ -37,7 +37,7 @@ function completionSource(schema: Record<string, string[]> = {}) {
   };
 }
 
-const SqlEditor = forwardRef<SqlEditorRef, Props>(function SqlEditor({ value, onChange, onExecute, schema, minHeight = 120 }, ref) {
+const SqlEditor = forwardRef<SqlEditorRef, Props>(function SqlEditor({ value, onChange, onExecute, schema, minHeight = 60 }, ref) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
   const propsRef = useRef({ onChange, onExecute });
@@ -74,8 +74,12 @@ const SqlEditor = forwardRef<SqlEditorRef, Props>(function SqlEditor({ value, on
           if (update.docChanged) propsRef.current.onChange?.(update.state.doc.toString());
         }),
         EditorView.theme({
-          "&": { minHeight: `${minHeight}px`, fontSize: "13px" },
-          ".cm-scroller": { fontFamily: "Consolas, monospace" }
+          "&": { minHeight: `${minHeight}px`, fontSize: "13px", backgroundColor: "#fff" },
+          ".cm-scroller": { fontFamily: "Consolas, monospace", backgroundColor: "#fff" },
+          ".cm-content": { backgroundColor: "#fff" },
+          ".cm-gutters": { backgroundColor: "#fff", borderRight: "1px solid var(--border)" },
+          ".cm-activeLine": { backgroundColor: "#f6f8fa" },
+          ".cm-activeLineGutter": { backgroundColor: "#f6f8fa" }
         })
       ]
     });
@@ -93,7 +97,7 @@ const SqlEditor = forwardRef<SqlEditorRef, Props>(function SqlEditor({ value, on
     }
   }, [value]);
 
-  return <div ref={hostRef} />;
+  return <div ref={hostRef} style={{ background: "#fff" }} />;
 });
 
 export default SqlEditor;

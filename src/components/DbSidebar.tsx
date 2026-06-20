@@ -104,7 +104,7 @@ export default function DbSidebar({ connId }: { connId: string }) {
         padding: 12
       }}
     >
-      <Space direction="vertical" style={{ width: "100%" }} size={10}>
+      <Space orientation="vertical" style={{ width: "100%" }} size={10}>
         <Select
           value={connId}
           style={{ width: "100%" }}

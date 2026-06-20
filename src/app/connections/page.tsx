@@ -59,7 +59,7 @@ export default function ConnectionsPage() {
     <>
       <AppHeader />
       <div className="page-pad">
-        <Space direction="vertical" size={16} style={{ width: "100%" }}>
+        <Space orientation="vertical" size={16} style={{ width: "100%" }}>
           <div className="toolbar" style={{ justifyContent: "space-between" }}>
             <div>
               <h1 style={{ margin: 0 }}>连接管理</h1>
