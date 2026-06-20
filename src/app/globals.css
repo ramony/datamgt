@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #17202a;
+  --muted: #687385;
+  --border: #dfe4ea;
+  --surface: #ffffff;
+  --accent: #1769aa;
+  --accent-2: #0f8b8d;
+  --warning: #fff6bf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(23, 105, 170, 0.06), transparent 280px),
+    var(--background);
+}
+
+.page-pad {
+  padding: 20px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.code-block {
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid var(--border);
+  background: #0f1720;
+  color: #d8e4f0;
+  padding: 14px;
+  border-radius: 6px;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.edited-cell {
+  background: var(--warning) !important;
+}
+
+.cm-editor {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  min-height: 120px;
+}

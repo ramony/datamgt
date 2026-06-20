@@ -1,0 +1,10 @@
+services:
+  datamgt:
+    build: .
+    ports:
+      - "3308:3000"
+    environment:
+      TZ: Asia/Shanghai
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-change-me-in-production}
+    volumes:
+      - ./data:/app/data
