@@ -57,7 +57,7 @@ export default function ConnectionsPage() {
 
   return (
     <>
-      <AppHeader />
+      {/* <AppHeader /> */}
       <div className="page-pad">
         <Space orientation="vertical" size={16} style={{ width: "100%" }}>
           <div className="toolbar" style={{ justifyContent: "space-between" }}>
@@ -104,7 +104,6 @@ export default function ConnectionsPage() {
                     <Space>
                       <Link href={`/db/${record.id}`}>
                         <Button type="primary" icon={<LoginOutlined />}>
-                          进入
                         </Button>
                       </Link>
                       <Button

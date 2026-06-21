@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button, Checkbox, Input, Select, Space, Tree, message } from "antd";
 import type { DataNode } from "antd/es/tree";
-import { CodeOutlined, HistoryOutlined, ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { CodeOutlined, HistoryOutlined, ReloadOutlined, SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import type { ConnectionRecord, TableSummary } from "@/lib/types";
 
 export default function DbSidebar({ connId }: { connId: string }) {
@@ -112,6 +112,11 @@ export default function DbSidebar({ connId }: { connId: string }) {
           onChange={(id) => router.push(`/db/${id}`)}
         />
         <div className="toolbar">
+          <Link href={`/connections`}>
+            <Button icon={<ArrowLeftOutlined />}>
+
+            </Button>
+          </Link>
           <Button icon={<ReloadOutlined />} onClick={() => loadDatabases()} />
           <Button icon={<CodeOutlined />} onClick={() => router.push(`/db/${connId}/sql`)} />
           <Button icon={<HistoryOutlined />} onClick={() => router.push(`/db/${connId}/history`)} />
