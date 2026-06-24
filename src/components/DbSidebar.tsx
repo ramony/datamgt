@@ -99,7 +99,7 @@ export default function DbSidebar({ connId }: { connId: string }) {
         maxWidth: 500,
         borderRight: "1px solid var(--border)",
         background: "#fff",
-        height: "calc(100vh - 54px)",
+        height: "calc(100vh - 0px)",
         overflow: "auto",
         padding: 12
       }}
