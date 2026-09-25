@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env TZ=Asia/Shanghai next dev",
+    "dev": "cross-env TZ=Asia/Shanghai next dev --turbo",
     "build": "cross-env TZ=Asia/Shanghai next build",
     "start": "cross-env TZ=Asia/Shanghai next start",
     "lint": "eslint"

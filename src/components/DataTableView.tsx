@@ -146,6 +146,7 @@ export default function DataTableView({ connId, database, table }: { connId: str
     title: column.Field,
     dataIndex: column.Field,
     sorter: true,
+    ellipsis: true,
     onCell: (record) => ({
       onDoubleClick: () => {
         const nextValue = window.prompt(`编辑 ${column.Field}`, display(edits[record.__key || ""]?.[column.Field] ?? record[column.Field]));
@@ -155,7 +156,7 @@ export default function DataTableView({ connId, database, table }: { connId: str
       },
       className: edits[record.__key || ""]?.[column.Field] !== undefined ? "edited-cell" : ""
     }),
-    render: (value, record) => display(edits[record.__key || ""]?.[column.Field] ?? value)
+    render: (value, record) => <span title={display(edits[record.__key || ""]?.[column.Field] ?? value)}>{display(edits[record.__key || ""]?.[column.Field] ?? value)}</span>
   }));
 
   const runCustomSql = () => {
@@ -246,7 +247,9 @@ export default function DataTableView({ connId, database, table }: { connId: str
       <Table
         size="small"
         rowKey="__key"
-        scroll={{ x: "max-content", y: 860 }}
+        tableLayout="fixed"
+        scroll={{ x: "max-content", y: "calc(100vh - 355px)" }}
+
         columns={antColumns}
         dataSource={rows}
         rowSelection={{ selectedRowKeys: selectedKeys, onChange: setSelectedKeys }}
