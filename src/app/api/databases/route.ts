@@ -12,13 +12,16 @@ export async function GET(request: Request) {
   if (!connection) return NextResponse.json({ error: "Connection not found" }, { status: 404 });
 
   if (connection.default_database && !showAll) {
+    console.log("Returning default database:", connection.default_database);
     return NextResponse.json({ data: [connection.default_database] });
   }
 
+  console.log("Fetching all databases for connection:", connId);
   const pool = await getPool(connId);
   const [rows] = await pool.query("SHOW DATABASES");
   const databases = (rows as Array<Record<string, string>>)
     .map((row) => row.Database)
     .filter((name) => !["information_schema", "performance_schema", "mysql", "sys"].includes(name));
+  console.log("Databases fetched:", databases);
   return NextResponse.json({ data: databases });
 }

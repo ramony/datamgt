@@ -103,7 +103,7 @@ export default function ConnectionsPage() {
                     render: (_, record) => (
                       <Space>
                         <Link href={`/db/${record.id}`}>
-                          <Button type="primary" icon={<DatabaseOutlined />}>
+                          <Button type="primary" icon={<DatabaseOutlined />} size="small">
                             {/* <DatabaseOutlined style={{ color: record.color || "#1769aa" }} /> */}
                             打开
                           </Button>
@@ -115,6 +115,7 @@ export default function ConnectionsPage() {
                             form.setFieldsValue({ ...record, password: undefined });
                             setOpen(true);
                           }}
+                          size="small"
                         />
                         <Button
                           icon={<CopyOutlined />}
@@ -123,6 +124,7 @@ export default function ConnectionsPage() {
                             form.setFieldsValue({ ...record, name: `${record.name} Copy`, password: "" });
                             setOpen(true);
                           }}
+                          size="small"
                         />
                         <Popconfirm
                           title="删除连接？"
@@ -131,7 +133,7 @@ export default function ConnectionsPage() {
                             load();
                           }}
                         >
-                          <Button danger icon={<DeleteOutlined />} />
+                          <Button danger icon={<DeleteOutlined />} size="small" />
                         </Popconfirm>
                       </Space>
                     )

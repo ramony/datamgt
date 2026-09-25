@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Button, Dropdown, Form, Input, InputNumber, Modal, Select, Space, Table, Tabs, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { DeleteOutlined, DownloadOutlined, EditOutlined, FilterOutlined, PlusOutlined, SaveOutlined, UndoOutlined } from "@ant-design/icons";
+import { DeleteOutlined, DownloadOutlined, EditOutlined, UploadOutlined, FilterOutlined, PlusOutlined, SaveOutlined, UndoOutlined, CodeOutlined, ExperimentOutlined } from "@ant-design/icons";
 import SqlEditor, { SqlEditorRef } from "@/components/sql-editor/SqlEditor";
 
 type Row = Record<string, unknown> & { __key?: string };
@@ -166,11 +166,11 @@ export default function DataTableView({ connId, database, table }: { connId: str
   };
 
   return (
-    <Space orientation="vertical" size={12} style={{ width: "100%" }}>
+    <Space orientation="vertical" size={8} style={{ width: "100%" }}>
       <div className="toolbar">
         {Object.keys(edits).length > 0 && (
           <>
-            <Button type="primary" icon={<SaveOutlined />} onClick={saveEdits}>
+            <Button type="primary" icon={<SaveOutlined />} onClick={saveEdits} >
               保存修改
             </Button>
             <Button icon={<UndoOutlined />} onClick={() => setEdits({})}>
@@ -215,40 +215,45 @@ export default function DataTableView({ connId, database, table }: { connId: str
             }
           }}
         >
-          <Button icon={<DownloadOutlined />}>导出</Button>
+          <Button icon={<DownloadOutlined />}>
+            导出
+          </Button>
         </Dropdown>
         <Link href={`/db/${connId}/${encodeURIComponent(database)}/${encodeURIComponent(table)}/import-export`}>
-          <Button>导入</Button>
+          <Button icon={<UploadOutlined />}>
+            导入
+          </Button>
         </Link>
         <Link href={`/db/${connId}/${encodeURIComponent(database)}/${encodeURIComponent(table)}/generate`}>
-          <Button>生成数据</Button>
+          <Button icon={<ExperimentOutlined />}>
+            生成数据
+          </Button>
         </Link>
         <Link href={`/db/${connId}/${encodeURIComponent(database)}/${encodeURIComponent(table)}/structure`}>
-          <Button>表结构</Button>
+          <Button icon={<CodeOutlined />}>
+            表结构
+          </Button>
         </Link>
-        <Button onClick={() => Modal.info({ title: "CREATE TABLE", width: 820, content: <pre className="code-block">{ddl}</pre> })}>DDL</Button>
+        <Button onClick={() => Modal.info({ title: "CREATE TABLE", width: 820, content: <pre className="code-block">{ddl}</pre> })}>
+          DDL
+        </Button>
       </div>
-      <Tabs
-        items={[
-          {
-            key: "sql",
-            label: "SQL",
-            children: (
-              <Space orientation="vertical" style={{ width: "100%" }}>
-                <SqlEditor ref={editorRef} value={sqlText} onChange={setSqlText} onExecute={runCustomSql} schema={schema} />
-                <Button type="primary" onClick={runCustomSql}>
-                  执行
-                </Button>
-              </Space>
-            )
-          }
-        ]}
-      />
+      <div className="mb-3 flex items-center gap-2 overflow-hidden" style={{ width: "100%" }}>
+        <div className="flex-1 overflow-hidden" style={{ minWidth: 0 }}>
+          <SqlEditor ref={editorRef} value={sqlText} onChange={setSqlText} onExecute={runCustomSql} schema={schema} />
+        </div>
+        <div className="flex-col gap-2" style={{ minWidth: 0 }}>
+          <Button type="primary" onClick={runCustomSql}>
+            执行
+          </Button>
+        </div>
+
+      </div>
       <Table
         size="small"
         rowKey="__key"
         tableLayout="fixed"
-        scroll={{ x: "max-content", y: "calc(100vh - 355px)" }}
+        scroll={{ x: "max-content", y: "calc(100vh - 235px)" }}
 
         columns={antColumns}
         dataSource={rows}
