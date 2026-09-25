@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Button, Checkbox, Input, Select, Space, Tree, message } from "antd";
+import { Button, Checkbox, Input, Select, Space, Table, Tree, message } from "antd";
 import type { DataNode } from "antd/es/tree";
-import { CodeOutlined, HistoryOutlined, ReloadOutlined, SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, CodeOutlined, DatabaseOutlined, HistoryOutlined, ReloadOutlined, SearchOutlined, ArrowLeftOutlined, TableOutlined } from "@ant-design/icons";
 import type { ConnectionRecord, TableSummary } from "@/lib/types";
+import Database from "better-sqlite3";
 
 export default function DbSidebar({ connId }: { connId: string }) {
   const router = useRouter();
@@ -68,15 +69,17 @@ export default function DbSidebar({ connId }: { connId: string }) {
       return {
         key: db,
         title: (
-          <Link href={`/db/${connId}/${encodeURIComponent(db)}`} onClick={() => openDatabase(db)}>
+          <Link href={`/db/${connId}/${encodeURIComponent(db)}`} onClick={() => openDatabase(db)} className="inline-flex items-center gap-1">
+            <DatabaseOutlined className="text-green-400 text-small flex-shrink-0" />
             {db}
           </Link>
         ),
         children: filteredTables.map((table) => ({
           key: `${db}.${table.name}`,
           title: (
-            <Link href={`/db/${connId}/${encodeURIComponent(db)}/${encodeURIComponent(table.name)}`} title={table.comment || table.name}>
-              {table.name} <span className="muted">({table.rows ?? 0})</span>
+            <Link href={`/db/${connId}/${encodeURIComponent(db)}/${encodeURIComponent(table.name)}`} className="inline-flex items-center gap-1">
+              <TableOutlined className="text-blue-500 text-small flex-shrink-0" />
+              <span className="">{table.name} ({table.rows ?? 0})</span>
             </Link>
           ),
           isLeaf: true
@@ -105,25 +108,29 @@ export default function DbSidebar({ connId }: { connId: string }) {
       }}
     >
       <Space orientation="vertical" style={{ width: "100%" }} size={10}>
-        <Select
-          value={connId}
-          style={{ width: "100%" }}
-          options={connections.map((item) => ({ value: item.id, label: item.name }))}
-          onChange={(id) => router.push(`/db/${id}`)}
-        />
+        <div className="px-3 pt-2 pb-1.5 flex items-center gap-2">
+          <Button onClick={() => router.push(`/connections`)} className="p-1 rounded" type="text" >
+            <ArrowLeftOutlined />
+          </Button>
+          <div className="flex-1 min-w-0">
+            <Select
+              value={connId}
+              style={{ width: "100%" }}
+              options={connections.map((item) => ({ value: item.id, label: item.name }))}
+              onChange={(id) => router.push(`/db/${id}`)}
+              variant="borderless"
+              className="w-full font-medium"
+            />
+          </div>
+        </div>
         <div className="toolbar">
-          <Link href={`/connections`}>
-            <Button icon={<ArrowLeftOutlined />}>
+          <Button icon={<AppstoreOutlined />} onClick={() => setShowAll(!showAll)} />
 
-            </Button>
-          </Link>
           <Button icon={<ReloadOutlined />} onClick={() => loadDatabases()} />
           <Button icon={<CodeOutlined />} onClick={() => router.push(`/db/${connId}/sql`)} />
           <Button icon={<HistoryOutlined />} onClick={() => router.push(`/db/${connId}/history`)} />
         </div>
-        <Checkbox checked={showAll} onChange={(event) => setShowAll(event.target.checked)}>
-          显示所有数据库
-        </Checkbox>
+
         <Input prefix={<SearchOutlined />} placeholder="搜索表名" value={search} onChange={(event) => setSearch(event.target.value)} />
         <Tree
           treeData={treeData}

@@ -58,86 +58,89 @@ export default function ConnectionsPage() {
   return (
     <>
       {/* <AppHeader /> */}
-      <div className="page-pad">
-        <Space orientation="vertical" size={16} style={{ width: "100%" }}>
-          <div className="toolbar" style={{ justifyContent: "space-between" }}>
-            <div>
-              <h1 style={{ margin: 0 }}>连接管理</h1>
-              <div className="muted">保存并测试你的 MySQL 连接配置。</div>
+      <div className="min-h-screen p-8 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <Space orientation="vertical">
+            <div className="toolbar" style={{ justifyContent: "space-between" }}>
+              <div>
+                <h1 style={{ margin: 0 }}>连接管理</h1>
+                <div className="muted">保存并测试你的 MySQL 连接配置。</div>
+              </div>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setEditing(null);
+                  form.setFieldsValue({ port: 3306, color: "#1769aa" });
+                  setOpen(true);
+                }}
+              >
+                新建连接
+              </Button>
             </div>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                setEditing(null);
-                form.setFieldsValue({ port: 3306, color: "#1769aa" });
-                setOpen(true);
-              }}
-            >
-              新建连接
-            </Button>
-          </div>
-          <Card>
-            <Table
-              rowKey="id"
-              dataSource={connections}
-              columns={[
-                {
-                  title: "名称",
-                  dataIndex: "name",
-                  render: (value, record) => (
-                    <Link href={`/db/${record.id}`}>
-                      <Space>
-                        <DatabaseOutlined style={{ color: record.color || "#1769aa" }} />
-                        <strong>{value}</strong>
-                      </Space>
-                    </Link>
-                  )
-                },
-                { title: "Host", dataIndex: "host" },
-                { title: "Port", dataIndex: "port" },
-                { title: "用户", dataIndex: "username" },
-                { title: "默认库", dataIndex: "default_database", render: (v) => (v ? <Tag>{v}</Tag> : <span className="muted">未设置</span>) },
-                {
-                  title: "操作",
-                  render: (_, record) => (
-                    <Space>
+            <Card>
+              <Table
+                rowKey="id"
+                dataSource={connections}
+                columns={[
+                  {
+                    title: "名称",
+                    dataIndex: "name",
+                    render: (value, record) => (
                       <Link href={`/db/${record.id}`}>
-                        <Button type="primary" icon={<LoginOutlined />}>
-                        </Button>
+                        <Space>
+                          <strong>{value}</strong>
+                        </Space>
                       </Link>
-                      <Button
-                        icon={<EditOutlined />}
-                        onClick={() => {
-                          setEditing(record);
-                          form.setFieldsValue({ ...record, password: undefined });
-                          setOpen(true);
-                        }}
-                      />
-                      <Button
-                        icon={<CopyOutlined />}
-                        onClick={() => {
-                          setEditing(null);
-                          form.setFieldsValue({ ...record, name: `${record.name} Copy`, password: "" });
-                          setOpen(true);
-                        }}
-                      />
-                      <Popconfirm
-                        title="删除连接？"
-                        onConfirm={async () => {
-                          await fetch(`/api/connections/${record.id}`, { method: "DELETE" });
-                          load();
-                        }}
-                      >
-                        <Button danger icon={<DeleteOutlined />} />
-                      </Popconfirm>
-                    </Space>
-                  )
-                }
-              ]}
-            />
-          </Card>
-        </Space>
+                    )
+                  },
+                  { title: "Host", dataIndex: "host" },
+                  { title: "Port", dataIndex: "port" },
+                  { title: "用户", dataIndex: "username" },
+                  { title: "默认库", dataIndex: "default_database", render: (v) => (v ? <Tag color="blue">{v}</Tag> : <span className="muted">未设置</span>) },
+                  {
+                    title: "操作",
+                    render: (_, record) => (
+                      <Space>
+                        <Link href={`/db/${record.id}`}>
+                          <Button type="primary" icon={<DatabaseOutlined />}>
+                            {/* <DatabaseOutlined style={{ color: record.color || "#1769aa" }} /> */}
+                            打开
+                          </Button>
+                        </Link>
+                        <Button
+                          icon={<EditOutlined />}
+                          onClick={() => {
+                            setEditing(record);
+                            form.setFieldsValue({ ...record, password: undefined });
+                            setOpen(true);
+                          }}
+                        />
+                        <Button
+                          icon={<CopyOutlined />}
+                          onClick={() => {
+                            setEditing(null);
+                            form.setFieldsValue({ ...record, name: `${record.name} Copy`, password: "" });
+                            setOpen(true);
+                          }}
+                        />
+                        <Popconfirm
+                          title="删除连接？"
+                          onConfirm={async () => {
+                            await fetch(`/api/connections/${record.id}`, { method: "DELETE" });
+                            load();
+                          }}
+                        >
+                          <Button danger icon={<DeleteOutlined />} />
+                        </Popconfirm>
+                      </Space>
+                    )
+                  }
+                ]}
+              />
+            </Card>
+          </Space>
+        </div>
       </div>
       <Modal
         open={open}
